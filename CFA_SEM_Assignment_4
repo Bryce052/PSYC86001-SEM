@@ -1,0 +1,43 @@
+# Read the CSV file
+data <- read.csv("RuminationData.csv")
+
+# Display the first few rows of the data
+head(data)
+
+# Generate summary statistics for each variable in the data frame
+summary(data)
+
+# Examine data structure
+str(data)
+
+# Define the variables of interest
+Rumination_variables <- c("rumi1", "rumi2", "rumi3", "rumi4", "sleep1", 
+                          "sleep2", "sleep3", "sad1", "sad2", "sad3", 
+                          "sad4", "leukocyt", "lymphocy")
+
+# Check if all variables exist in the dataset
+missing_variables <- setdiff(Rumination_variables, names(data))
+if (length(missing_variables) > 0) {
+  stop(paste("The following variables are missing from the dataset:", 
+             paste(missing_variables, collapse = ", ")))
+}
+
+# Extract a subset of the data containing only the specified variables
+Rumination_subset <- data[, Rumination_variables]
+
+# Compute the correlation matrix for the subset of variables
+correlation_matrix <- cor(Rumination_subset)
+
+# Calculate the standard deviation for each variable
+standard_deviations <- apply(Rumination_subset, 2, sd)
+
+# Combine the correlation matrix and standard deviations into a single data frame
+result <- data.frame(Variable = names(standard_deviations), 
+                     Standard_Deviation = standard_deviations,
+                     Correlation = NA)  # Placeholder for correlation values
+
+# Print the combined result, showing both standard deviations and the correlation matrix
+cat("\nStandard Deviations:\n")
+print(result)
+cat("\nCorrelation Matrix:\n")
+print(correlation_matrix)
