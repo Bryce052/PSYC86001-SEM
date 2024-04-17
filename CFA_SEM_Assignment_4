@@ -15,13 +15,6 @@ Rumination_variables <- c("rumi1", "rumi2", "rumi3", "rumi4", "sleep1",
                           "sleep2", "sleep3", "sad1", "sad2", "sad3", 
                           "sad4", "leukocyt", "lymphocy")
 
-# Check if all variables exist in the dataset
-missing_variables <- setdiff(Rumination_variables, names(data))
-if (length(missing_variables) > 0) {
-  stop(paste("The following variables are missing from the dataset:", 
-             paste(missing_variables, collapse = ", ")))
-}
-
 # Extract a subset of the data containing only the specified variables
 Rumination_subset <- data[, Rumination_variables]
 
