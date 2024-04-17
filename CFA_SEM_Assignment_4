@@ -41,3 +41,40 @@ cat("\nStandard Deviations:\n")
 print(result)
 cat("\nCorrelation Matrix:\n")
 print(correlation_matrix)
+
+# Model 1 - CFA 
+
+# Load required library
+library(lavaan)
+
+# Define the CFA model
+cfa_model <- '
+  # Define latent factors
+  rumination =~ rumi1 + rumi2 + rumi3 + rumi4
+  sadness =~ sad1 + sad2 + sad3 + sad4
+  sleep =~ sleep1 + sleep2 + sleep3
+  immunity =~ leukocyt + lymphocy
+
+  # Define interrelations between factors
+  rumination ~~ sadness
+  rumination ~~ sleep
+  rumination ~~ immunity
+  sadness ~~ sleep
+  sadness ~~ immunity
+  sleep ~~ immunity
+'
+
+# Fit the CFA model to the data
+cfa_fit <- lavaan::cfa(cfa_model, data = data)
+
+# Summarize the model results including parameters and standardized parameters
+summary(cfa_fit, standardize = TRUE)
+
+# Create the path diagram
+# Load required libraries
+library(semPlot)
+
+semPaths(cfa_fit, layout = "tree2", whatLabels = "std", style = "lisrel", edge.label.cex = 0.8)
+
+# Model 2 
+
