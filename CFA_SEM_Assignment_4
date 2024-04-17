@@ -70,11 +70,46 @@ cfa_fit <- lavaan::cfa(cfa_model, data = data)
 # Summarize the model results including parameters and standardized parameters
 summary(cfa_fit, standardize = TRUE)
 
-# Create the path diagram
+# Create the path diagram for the CFA model
 # Load required libraries
 library(semPlot)
 
 semPaths(cfa_fit, layout = "tree2", whatLabels = "std", style = "lisrel", edge.label.cex = 0.8)
 
-# Model 2 
+# Model 2 - SEM
 
+# Define the SEM model
+model <- '
+  # Define latent variables
+  Rumination =~ rumi1 + rumi2 + rumi3 + rumi4
+  Sleep =~ sleep1 + sleep2 + sleep3
+  Sadness =~ sad1 + sad2 + sad3 + sad4
+  Immunity =~ leukocyt + lymphocy
+  
+  # Define relationships
+  Sleep ~ Rumination
+  Immunity ~ Sleep
+  Sadness ~ Rumination
+  Immunity ~ Sadness
+'
+
+# Estimate the SEM model
+sem_fit <- sem(model, data = data)
+
+# Summarize the results of the SEM model
+summary(sem_fit)
+
+# Plot the interactions and coefficients for the SEM model
+semPaths(sem_fit, what = "std", edge.label.cex = 1.5)
+
+# Compare the fit of the models using various measures
+cfa_fit_measures <- fitMeasures(cfa_fit)
+sem_fit_measures <- fitMeasures(sem_fit)
+
+# Print fit measures for CFA model
+print("Fit measures for CFA model:")
+print(cfa_fit_measures)
+
+# Print fit measures for SEM model
+print("Fit measures for SEM model:")
+print(sem_fit_measures)
