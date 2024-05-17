@@ -6,8 +6,11 @@ This repository serves as a dedicated workspace for the SEM course, providing re
 
 # Contents
   **R Studio Code:** Access R scripts specifically designed for SEM analysis.
+  
   **Python Code:** Access Python scripts specifically designed for SEM analysis.
+  
   **Plot Generation**: Explore scripts for generating plots and visualizations related to SEM models.
+  
   **Course Material:** Find additional resources and materials relevant to the SEM course.
 
 # Usage
